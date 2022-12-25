@@ -27,17 +27,17 @@ namespace Biyo_Watermann
             dataGridView.Refresh();//TEMİZLE
             textBoxSeq1.Text = String.Empty;//textbox boş
             textBoxSeq2.Text = String.Empty;//textbox boş
-            Stopwatch süredurdur = new Stopwatch();//süreyi durdur
-            süredurdur.Start(); //süreyi başlat
+            Stopwatch sureDurdur = new Stopwatch();//süreyi durdur
+            sureDurdur.Start(); //süreyi başlat
             try //hata yakalama
             {   //dosyayı oku 
                 using (StreamReader sr = new StreamReader(@"C:\Users\sefa_\source\repos\Biyo_Watermann\Biyo_Watermann\Text\gen1.txt"))
                 {
-                    string sıra;
+                    string sira;
                     //dosyanın içindekileri oku
-                    while ((sıra = sr.ReadLine()) != null) //null oluncaya kadar devam et
+                    while ((sira = sr.ReadLine()) != null) //null oluncaya kadar devam et
                     {
-                        gen1_l = sıra;
+                        gen1_l = sira;
                         //boşluk olana kadar
                         gen1 = sr.ReadToEnd().Replace("\n", "").Replace("\r", "");
                     }
@@ -53,11 +53,11 @@ namespace Biyo_Watermann
             {   //dosyayı oku
                 using (StreamReader sr2 = new StreamReader(@"C:\Users\sefa_\source\repos\Biyo_Watermann\Biyo_Watermann\Text\gen2.txt"))
                 {
-                    string sıra2;
+                    string sira2;
                     //dosyanın içindekileri oku
-                    while ((sıra2 = sr2.ReadLine()) != null)//null oluncaya kadar devam et
+                    while ((sira2 = sr2.ReadLine()) != null)//null oluncaya kadar devam et
                     {
-                        gen2_l = sıra2;
+                        gen2_l = sira2;
                         //boşluk olana kadar
                         gen2 = sr2.ReadToEnd().Replace("\n", "").Replace("\r", "");
                     }
@@ -71,26 +71,26 @@ namespace Biyo_Watermann
             string s1 = gen1.ToUpper(); //büyük harfe çevir
             string s2 = gen2.ToUpper(); //büyük harfe çevir
             int eslesme = Convert.ToInt32(textBoxMatch.Text); //eşleşme
-            int eslesme_olmadı = Convert.ToInt32(textBoxMiss.Text);//eşleşme olmadı
+            int eslesme_olmadi = Convert.ToInt32(textBoxMiss.Text);//eşleşme olmadı
             int bosluk = Convert.ToInt32(textBoxGap.Text); //boşluk
-            char[] aracı_1 = new char[s1.Length]; //gececi dizi1
-            char[] aracı_2 = new char[s2.Length]; //gecici dizi2
-            aracı_1 = s1.ToCharArray(); //ayır
-            aracı_2 = s2.ToCharArray(); //ayır
-            dataGridView.ColumnCount = aracı_1.Length + 1; //gridview de yanlarda yazması
-            dataGridView.RowCount = aracı_2.Length + 1; //gridview de yanlara yazması
+            char[] araci_1 = new char[s1.Length]; //gececi dizi1
+            char[] araci_2 = new char[s2.Length]; //gecici dizi2
+            araci_1 = s1.ToCharArray(); //ayır
+            araci_2 = s2.ToCharArray(); //ayır
+            dataGridView.ColumnCount = araci_1.Length + 1; //gridview de yanlarda yazması
+            dataGridView.RowCount = araci_2.Length + 1; //gridview de yanlara yazması
             dataGridView.Columns[0].Name = "i"; //yanalrda gözükecek default 
             dataGridView.Rows[0].HeaderCell.Value = "j"; //yanlarda gözükecek default
             //gridview de değerleri yanlara yazma
-            for (int i = 0; i < aracı_1.Length; i++)
+            for (int i = 0; i < araci_1.Length; i++)
             {
                 //ismini aktar i ye
-                dataGridView.Columns[i + 1].Name = aracı_1[i].ToString(); //yazılan i+1 den i ye yazdır
+                dataGridView.Columns[i + 1].Name = araci_1[i].ToString(); //yazılan i+1 den i ye yazdır
             }
-            for (int j = 0; j < aracı_2.Length; j++)
+            for (int j = 0; j < araci_2.Length; j++)
             {
                 //ismini aktar j ye
-                dataGridView.Rows[j + 1].HeaderCell.Value = aracı_2[j].ToString(); //yazılan j+1 den j ye yazdır
+                dataGridView.Rows[j + 1].HeaderCell.Value = araci_2[j].ToString(); //yazılan j+1 den j ye yazdır
             }
             int hesap_a;
             for (int i = 0; i < dataGridView.Columns.Count; i++)//gridviewin sütunları kadar 
@@ -126,7 +126,7 @@ namespace Biyo_Watermann
                     {
                         //hesaplama
                         hesap_a = Math.Max(int.Parse(dataGridView[i - 1, j].Value.ToString()) + bosluk,
-                            Math.Max(int.Parse(dataGridView[i, j - 1].Value.ToString()) + bosluk, int.Parse(dataGridView[i - 1, j - 1].Value.ToString()) + eslesme_olmadı));
+                            Math.Max(int.Parse(dataGridView[i, j - 1].Value.ToString()) + bosluk, int.Parse(dataGridView[i - 1, j - 1].Value.ToString()) + eslesme_olmadi));
                         //sıfır ile doldurma
                         if (hesap_a > 0)//sıfırdan büyükse
                         {
@@ -196,12 +196,12 @@ namespace Biyo_Watermann
                                         y--;
                                     }
                                     //sol max ise
-                                    else if (int.Parse(dataGridView[x, y].Value.ToString()) == (int.Parse(dataGridView[x - 1, y - 1].Value.ToString()) + eslesme_olmadı)) //sol max ise
+                                    else if (int.Parse(dataGridView[x, y].Value.ToString()) == (int.Parse(dataGridView[x - 1, y - 1].Value.ToString()) + eslesme_olmadi)) //sol max ise
                                     {
                                         gen1_hiza.Insert(0, s1[x]);
                                         gen2_hiza.Insert(0, s2[y]);
                                         dataGridView[x, y].Style.BackColor = Color.Aqua;//renk
-                                        temp_score += eslesme_olmadı;
+                                        temp_score += eslesme_olmadi;
                                         x--;
                                         y--;
                                     }
@@ -258,8 +258,8 @@ namespace Biyo_Watermann
                 }
             }
             textBoxScore.Text = score.ToString(); //textbox a yazdır
-            süredurdur.Stop(); //süreyi durdur
-            TimeSpan ts = süredurdur.Elapsed; //zaman
+            sureDurdur.Stop(); //süreyi durdur
+            TimeSpan ts = sureDurdur.Elapsed; //zaman
             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
                 ts.Hours, ts.Minutes, ts.Seconds,
                 ts.Milliseconds / 10);
